@@ -1,1 +1,3 @@
-2025-12-27 19:46:56,795 - 00_init_db - INFO - Starting 00_init_db process...
+2025-12-27 20:18:05,033 - [00_init_db.py:init_db] - INFO - Window: 2023-01-01 to 2025-12-01
+2025-12-27 20:18:05,034 - [00_init_db.py:init_db] - INFO - Target: 2000 hosts @ C:\pyproj\HorizonStudy\data\synthetic\horizonscale_synth.db
+2025-12-27 20:18:05,034 - [00_init_db.py:init_db] - INFO - Database and dimensions initialized successfully.

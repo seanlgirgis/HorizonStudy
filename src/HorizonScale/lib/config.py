@@ -98,9 +98,20 @@ import enum
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 # Database settings  
-# Now these directories will be created in C:\pyproj\HorizonStudy\
+# Now these directories will be created in C:\pyproj\HorizonStudy\q
 DB_PATH = PROJECT_ROOT / "data" / "synthetic" / "horizonscale_synth.db"  
 SQL_SCHEMA_DIR = PROJECT_ROOT / "data" / "synthetic" / "sql"  
 PLOTS_DIR = PROJECT_ROOT / "plots"  
 LOG_DIR = PROJECT_ROOT / "logs"  
 LOG_LEVEL = "INFO"
+
+# Time range  
+TIME_START = "2023-01-01"  
+TIME_END = "2025-12-01"  
+
+
+# Default generation params  
+DEFAULT_NUM_HOSTS = 2000  
+DEFAULT_YEARS = range(2023, 2026)  
+
+

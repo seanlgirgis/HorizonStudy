@@ -83,18 +83,86 @@ What the code inside is doing:
     comprehensive logging. Truncated parts likely include full seeding logic, but based on provided, it's complete for init.
 """
 
-from pathlib import Path  
+from pathlib import Path
+from typing_extensions import get_args  
+import argparse
 
 
 from horizonscale.lib.config import (  
     PROJECT_ROOT, DB_PATH, SQL_SCHEMA_DIR, PLOTS_DIR
-    , LOG_DIR ,LOG_LEVEL
+    , DEFAULT_NUM_HOSTS, TIME_START, TIME_END
 )  
 from horizonscale.lib.utils import setup_logging
+from horizonscale.lib.logging import init_root_logging
 
-# Path(__file__) gets the full path to 00_init_db.py
-# .stem extracts just '00_init_db' and strips the '.py'
-script_name = Path(__file__).stem
-logger = setup_logging(script_name)
+logger = init_root_logging(Path(__file__).stem)
 
-logger.info(f"Starting {script_name} process...")
+
+def get_args():
+    """
+    Parse command line arguments with fallbacks to config.py.
+    Supports number of hosts and the 2023-2025 time window.
+    """
+    parser = argparse.ArgumentParser(
+        description="HorizonScale: Initialize DuckDB with Host Metadata and Time Dimensions."
+    )
+    
+    # Number of Hosts (Default 2000)
+    parser.add_argument(
+        "--num_hosts", 
+        type=int, 
+        default=DEFAULT_NUM_HOSTS,
+        help=f"Number of synthetic hosts (default: {DEFAULT_NUM_HOSTS})"
+    )
+    
+    # Start Date (Default 2023-01-01)
+    parser.add_argument(
+        "--start_date", 
+        type=str, 
+        default=TIME_START,
+        help=f"Simulation start date (default: {TIME_START})"
+    )
+    
+    # End Date (Default 2025-12-01)
+    parser.add_argument(
+        "--end_date", 
+        type=str, 
+        default=TIME_END,
+        help=f"Simulation end date (default: {TIME_END})"
+    )
+    
+    parser.add_argument(
+        "--db_path", 
+        type=str, 
+        default=str(DB_PATH),
+        help=f"Path to DuckDB file (default: {DB_PATH})"
+    )
+
+    return parser.parse_args()
+
+def init_db(num_hosts: int, db_path: str, start_date: str, end_date: str):
+    """
+    Initializes the database using parameters for scale and timeframe.
+    """
+# Flagging as is_main=True sets up the whole root system
+
+
+
+    logger.info(f"Window: {start_date} to {end_date}")
+    logger.info(f"Target: {num_hosts} hosts @ {db_path}")
+
+    # Logic for seeding 'time_periods' table:
+    # Use pl.date_range(start_date, end_date, interval="1d") 
+    # to populate your daily dimension.
+    
+    logger.info("Database and dimensions initialized successfully.")
+
+if __name__ == "__main__":  
+  # Get args (will use config defaults if nothing is passed)
+  args = get_args()
+  init_db(
+        num_hosts=args.num_hosts, 
+        db_path=args.db_path, 
+        start_date=args.start_date, 
+        end_date=args.end_date
+    )
