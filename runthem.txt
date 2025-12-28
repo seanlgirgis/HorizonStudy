@@ -1,0 +1,7 @@
+
+ python -m horizonscale.synthetic.00_init_db
+
+
+ python -m horizonscale.synthetic.01_generate_master_parquet
+
+ python -m horizonscale.lib.001learning

@@ -1,0 +1,29 @@
+That speed is impressive. Generating **8.5 million rows in roughly 3 seconds** is a testament to the efficiency of Polars and vectorized NumPy operations.
+
+## Is Concurrent Processing Needed?
+
+In this specific case, **adding concurrent processing is likely an overkill.** Here is a breakdown of why:
+
+* **The Bottleneck is Mathematical, not I/O:** Since you are generating data in-memory using NumPy and then writing a single compressed Parquet file, the overhead of managing multiple threads or processes might actually slow you down for a 2,000-host dataset.
+* **The "Cost of Complexity":** Multi-threading in Python (especially with the Global Interpreter Lock) often complicates code and makes debugging significantly harder for a very marginal gain in speed.
+* **Polars is Already Concurrent:** Under the hood, Polars uses Rust-based multi-threading for many operations (like concatenation and writing to Parquet), meaning you are already benefiting from parallelism without writing a single line of complex `multiprocessing` code.
+
+---
+
+## When would you consider it?
+
+If you decide to scale this project for a massive enterprise portfolio demonstration (e.g., **50,000 hosts** instead of 2,000), you would hit a point where generation takes minutes instead of seconds. That is the moment to move to a **Chunked Generation** strategy.
+
+| Scale | Strategy | Recommendation |
+| --- | --- | --- |
+| **2,000 Hosts (Current)** | Single-threaded Loop | **Stay here.** It is fast, readable, and easy to maintain. |
+| **10,000 Hosts** | Batch Processing | Split hosts into groups of 1,000 and process sequentially. |
+| **50,000+ Hosts** | `ProcessPoolExecutor` | Distribute host batches across all CPU cores for parallel generation. |
+
+## Summary for your Portfolio
+
+Keeping the current single-threaded approach is actually a **sophisticated engineering choice.** You can explain it to hiring managers like this:
+
+> "I optimized the generation pipeline using vectorized NumPy and Polars, achieving a generation rate of over 2.5 million rows per second. Because the current performance meets our SLAs with zero overhead, I prioritized code maintainability over unnecessary concurrency."
+
+**Would you like to move on to Step 02, where we export these results into monthly CSVs to simulate a legacy data feed?**

@@ -15,13 +15,16 @@ def init_root_logging(script_name: str):
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
     
+    # --- ENHANCEMENT: SILENCE EXTERNAL NOISE ---
+    # This prevents Faker from flooding the log with 'Looking for locale' DEBUG messages
+    logging.getLogger("faker").setLevel(logging.INFO)
+    # -------------------------------------------
+    
     # Wipe old handlers to ensure we don't double-log
     if root.hasHandlers():
         root.handlers.clear()
 
-    # The Magic Formatter: 
-    # %(filename)s -> automatically gets the file name
-    # %(funcName)s -> automatically gets the method/function name
+    # The Magic Formatter
     log_format = "%(asctime)s - [%(filename)s:%(funcName)s] - %(levelname)s - %(message)s"
     formatter = logging.Formatter(log_format)
 
@@ -38,4 +41,4 @@ def init_root_logging(script_name: str):
     root.addHandler(fh)
     root.addHandler(ch)
 
-    return root # This is the "Master" instance
+    return root

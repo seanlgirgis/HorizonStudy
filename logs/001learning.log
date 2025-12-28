@@ -1,0 +1,6 @@
+2025-12-28 11:05:01,378 - [__init__.py:wrapper] - DEBUG - matplotlib data path: C:\py_venv\HorizonStudy\Lib\site-packages\matplotlib\mpl-data
+2025-12-28 11:05:01,382 - [__init__.py:wrapper] - DEBUG - CONFIGDIR=C:\Users\egirg\.matplotlib
+2025-12-28 11:05:01,382 - [__init__.py:<module>] - DEBUG - interactive is False
+2025-12-28 11:05:01,382 - [__init__.py:<module>] - DEBUG - platform is win32
+2025-12-28 11:05:01,402 - [__init__.py:wrapper] - DEBUG - CACHEDIR=C:\Users\egirg\.matplotlib
+2025-12-28 11:05:01,404 - [font_manager.py:_load_fontmanager] - DEBUG - Using fontManager instance from C:\Users\egirg\.matplotlib\fontlist-v390.json

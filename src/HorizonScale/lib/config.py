@@ -109,9 +109,118 @@ LOG_LEVEL = "INFO"
 TIME_START = "2023-01-01"  
 TIME_END = "2025-12-01"  
 
+# Master Parquet Paths  
+MASTER_DATA_DIR = PROJECT_ROOT / "data" / "synthetic" / "master"  
+MASTER_PARQUET_FILE = MASTER_DATA_DIR / "master_daily_2023_2025.parquet"  
 
 # Default generation params  
 DEFAULT_NUM_HOSTS = 2000  
 DEFAULT_YEARS = range(2023, 2026)  
 
 
+# Scenario enum  
+class Scenario(enum.Enum):  
+    STEADY_GROWTH = 'steady_growth'  
+    SEASONAL = 'seasonal'  
+    BURST = 'burst'  
+    LOW_IDLE = 'low_idle'  
+    CAPACITY_BREACH = 'capacity_breach'  
+    # PLATEAU_DECLINE = 'plateau_decline'  # MVP: Moved to Future Roadmap (Black Swan research)
+    
+# The "Data Center Profile" - defines the percentage of each behavior
+# Total must sum to 1.0
+SCENARIO_DISTRIBUTION = {
+    Scenario.STEADY_GROWTH: 0.35  # Increased from 0.30 to compensate for removing PLATEAU_DECLINE
+   , Scenario.LOW_IDLE: 0.25
+    ,Scenario.SEASONAL: 0.20
+    ,Scenario.BURST: 0.15
+    ,Scenario.CAPACITY_BREACH: 0.05
+    # ,Scenario.PLATEAU_DECLINE: 0.05   # MVP: Disabled to focus on core forecasting patterns
+}
+
+
+SCENARIO_VARIANTS = {  
+    Scenario.STEADY_GROWTH: {'common': 'normal', 'rare': 'breach'}
+    ,Scenario.SEASONAL: {'common': 'balanced', 'rare': 'extreme'}
+    ,Scenario.BURST: {'common': 'moderate', 'rare': 'extreme'}
+    ,Scenario.LOW_IDLE: {'common': 'stable', 'rare': 'variable'} # Aligned with generate_low_idling expectations (added correct strings)  
+    ,Scenario.CAPACITY_BREACH: {'common': 'imminent', 'rare': 'severe'}  # Aligned with generate_capacity_breach (added correct strings)  
+    # ,Scenario.PLATEAU_DECLINE: {'common': 'sharp', 'rare': 'slow'},  # Disabled for MVP
+}  
+
+# The "Risk Profile" - probability of a host being 'common' vs 'rare'
+VARIANT_WEIGHTS = {
+    'common': 0.80,
+    'rare': 0.20
+}
+
+# Classifications  
+CLASSIFICATIONS = ["physical", "virtual"]  
+
+# Business units / departments  
+DEPARTMENTS = [  
+    "Retail Banking",  
+    "Financial Services",  
+    "Small Business",  
+    "Corporate",  
+    "Investment Banking",  
+    "Commercial Loans",  
+    "Wealth Management"  
+]  
+
+# Regions list  
+REGIONS = ["NA", "EMEA", "LATAM", "ASIAPAC"]  
+
+# Server types  
+SERVER_TYPES = ["Unix", "Linux", "Windows", "Other"]  
+
+# --- Scenario Generator Parameters ---
+GENERATOR_CONFIG = {
+    Scenario.STEADY_GROWTH: {
+        "normal": {
+            "base_range": (35, 55),
+            "growth_total_range": (12, 18),
+            "std_growth": (0.002, 0.006),
+            "noise_std": (1.5, 2.5),
+            "season_amp": (2.0, 4.0)
+        },
+        "breach": {
+            "base_range": (70, 80),
+            "growth_total_range": (18, 22),
+            "std_growth": (0.003, 0.007),
+            "noise_std": (1.0, 2.0),
+            "season_amp": (3.0, 5.0)
+        }
+    },
+    # ... add other scenarios here ...
+}
+
+
+# Resource types  
+# config.py
+
+# Resource types with randomized ranges for adjust_factor and noise_std
+RESOURCE_TYPES = {  
+    'cpu': {
+        'capacity_field': 'max_cores', 
+        'adjust_factor_range': (1.05, 1.25), # Randomly pick between 1.05 and 1.25
+        'noise_std_range': (2.0, 4.0)        # Randomly pick jitter intensity
+    },  
+    'memory': {
+        'capacity_field': 'memory_gb', 
+        'adjust_factor_range': (0.95, 1.10), 
+        'noise_std_range': (3.0, 5.0)
+    },  
+    'disk': {
+        'capacity_field': 'storage_capacity_mb', 
+        'adjust_factor_range': (0.70, 0.90), 
+        'noise_std_range': (5.0, 9.0)
+    },  
+    'network': {
+        'capacity_field': None, 
+        'adjust_factor_range': (0.85, 1.15), 
+        'noise_std_range': (4.0, 7.0)
+    },  
+}
+
+SEED_MODULO = 2**32 - 1  
