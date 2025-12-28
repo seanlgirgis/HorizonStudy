@@ -80,3 +80,44 @@ What the code inside is doing:
     The code emphasizes robustness (idempotency, assertions, duplicate prevention) and is designed for heavy reuse
     across the pipeline without side effects on import.
 """
+
+import logging
+import sys
+from horizonscale.lib.config import LOG_DIR, LOG_LEVEL
+
+def setup_logging(script_name: str):
+    """
+    Initializes the ROOT logger. Call this ONLY once in your main script.
+    
+    A) All code writes to one file.
+    B) Console (INFO/WARNING) vs File (DEBUG/INFO).
+    C) Named after the script (e.g., 00_init_db.log).
+    D) Overwrites existing file (mode='w').
+    """
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    log_file = LOG_DIR / f"{script_name}.log"
+    
+    # 1. Get the Root Logger
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)  # Capture everything at the root level
+
+    # Prevent adding multiple handlers if setup is called twice
+    if not root_logger.handlers:
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+        # 2. File Handler (Lower level: DEBUG/INFO)
+        # Mode='w' ensures it starts fresh/overwrites
+        file_handler = logging.FileHandler(log_file, mode='w')
+        file_handler.setLevel(logging.DEBUG) 
+        file_handler.setFormatter(formatter)
+
+        # 3. Stream/Console Handler (Higher level: INFO or WARNING)
+        console_handler = logging.StreamHandler(sys.stdout)
+        console_handler.setLevel(logging.INFO) 
+        console_handler.setFormatter(formatter)
+
+        # 4. Add handlers to root
+        root_logger.addHandler(file_handler)
+        root_logger.addHandler(console_handler)
+
+    return logging.getLogger(script_name)

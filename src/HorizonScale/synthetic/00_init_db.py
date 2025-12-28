@@ -82,3 +82,19 @@ What the code inside is doing:
     Code emphasizes robustness: Idempotent table ops, random seeding for realism, assertions for criteria,
     comprehensive logging. Truncated parts likely include full seeding logic, but based on provided, it's complete for init.
 """
+
+from pathlib import Path  
+
+
+from horizonscale.lib.config import (  
+    PROJECT_ROOT, DB_PATH, SQL_SCHEMA_DIR, PLOTS_DIR
+    , LOG_DIR ,LOG_LEVEL
+)  
+from horizonscale.lib.utils import setup_logging
+
+# Path(__file__) gets the full path to 00_init_db.py
+# .stem extracts just '00_init_db' and strips the '.py'
+script_name = Path(__file__).stem
+logger = setup_logging(script_name)
+
+logger.info(f"Starting {script_name} process...")

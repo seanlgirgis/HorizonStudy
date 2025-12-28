@@ -88,3 +88,19 @@
 #     The code is declarative and runs at import time, making all these available as module-level globals.
 #     No functions or logic beyond path calculations and assignments; it's designed for import and use.
 """
+
+
+from pathlib import Path  
+import enum  
+
+# Project root (four levels up from src/horizonscale/lib/config.py)  
+# 0: lib, 1: horizonscale, 2: src, 3: HorizonStudy
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+# Database settings  
+# Now these directories will be created in C:\pyproj\HorizonStudy\
+DB_PATH = PROJECT_ROOT / "data" / "synthetic" / "horizonscale_synth.db"  
+SQL_SCHEMA_DIR = PROJECT_ROOT / "data" / "synthetic" / "sql"  
+PLOTS_DIR = PROJECT_ROOT / "plots"  
+LOG_DIR = PROJECT_ROOT / "logs"  
+LOG_LEVEL = "INFO"
