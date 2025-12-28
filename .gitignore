@@ -1,0 +1,22 @@
+# Python Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data Files (Keep these out if they get large)
+*.csv
+*.xlsx
+
+# Environment & Credentials
+.env
+.venv/
+env/
+venv/
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# IDE Specific
+.vscode/
+.idea/

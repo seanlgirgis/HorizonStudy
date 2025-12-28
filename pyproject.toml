@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "horizonscale"
+version = "0.1.0"
+description = "6-Month Infrastructure Capacity Forecasting Engine"
+authors = [{name = "Sean L Girgis"}]
+dependencies = [
+    "polars>=0.20.0",
+    "faker>=20.0.0",
+    "duckdb>=0.9.0",
+    "pandas>=2.0.0",
+    "numpy>=1.26.0",
+    "matplotlib>=3.8.0",
+    "scikit-learn>=1.4.0",
+    "statsmodels>=0.14.0",
+    "prophet>=1.1.0",
+    "neuralprophet>=0.8.0",
+    "darts>=0.27.0",
+    "lightgbm>=4.0.0",
+    "streamlit>=1.29.0",
+    "argparse>=1.4.0"  # Built-in, but explicit for clarity
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/horizonscale"]
+
+# OPTIONAL: Add an entry point so you can run your tool by just typing 'horizonscale' in the shell
+[project.scripts]
+horizonscale = "horizonscale.main:main"

@@ -1,0 +1,16 @@
+# Existing rules 
+* text=auto eol=lf
+*.csv text eol=lf
+*.parquet filter=lfs diff=lfs merge=lfs -text
+*.db filter=lfs diff=lfs merge=lfs -text
+plots/** filter=lfs diff=lfs merge=lfs -text
+
+# --- Enhancements ---
+# Protect serialized models and python artifacts
+*.pkl filter=lfs diff=lfs merge=lfs -text
+*.pth filter=lfs diff=lfs merge=lfs -text
+*.joblib filter=lfs diff=lfs merge=lfs -text
+
+# Treat Jupyter Notebooks as text but don't normalize endings 
+# (helps with diffing if you use them for EDA)
+*.ipynb text
