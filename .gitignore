@@ -28,3 +28,4 @@ Thumbs.db
 
 # Allow this specific image
 !docs/image.png
+!docs/image-1.png
