@@ -1,27 +1,20 @@
 """
 02_export_monthly_csvs.py
-Author: Sean L Girgis
+Author: Sean L. Girgis
 
 Purpose:
     Simulates a 'Legacy Data Feed' by decomposing the Master Parquet file into 
-    individual monthly CSVs. This represents the raw state of data before it is 
-    centralized—essential for demonstrating data engineering pipeline resilience.
+    fragmented monthly CSVs. This represents the raw, "dirty" state of data 
+    before centralization—essential for demonstrating pipeline resilience.
 
 Genesis (Entrance Criteria):
-    - Master Parquet must exist and be accessible.
-    - Required legacy configuration (prefixes/paths) must be defined.
+    - Master Parquet must exist at MASTER_PARQUET_FILE (from Stage 01).
+    - Resource prefixes and capacity fields must be defined in config.py.
 
 Success (Exit Criteria):
-    - Every host/resource/day from the Parquet must be accounted for in the CSVs.
-    - Folder structure must follow /YYYY/MM/ pattern.
-    - File naming must match legacy prefixes (e.g., cpu_utilization_202401.csv).
-"""
-"""
-02_export_monthly_csvs.py
-Author: Sean L Girgis
-
-Decomposes the Master Parquet into monthly CSVs to simulate legacy data feeds.
-Includes a final audit to ensure all 10 behavioral varieties are represented.
+    - Data is partitioned into a hierarchical /YYYY/MM/ directory structure.
+    - Every host/resource/day record is accounted for (Row Parity).
+    - Files are named according to legacy standards (e.g., cpu_utilization_202401.csv).
 """
 
 import polars as pl
@@ -39,24 +32,30 @@ from horizonscale.lib.logging import init_root_logging
 logger = init_root_logging(Path(__file__).stem)
 
 def check_genesis_criteria():
-    """Validates entrance criteria for CSV export."""
+    """
+    ENTRANCE AUDIT: Validates that the source data exists and target 
+    directories are initialized.
+    """
     logger.info("--- Validating Script Entrance Criteria ---")
     if not MASTER_PARQUET_FILE.exists():
         logger.error(f"FAIL: Master Parquet not found at {MASTER_PARQUET_FILE}")
-        raise FileNotFoundError("Genesis failed: Run 01_generate first.")
+        raise FileNotFoundError("Genesis failed: Run 01_generate_master_parquet.py first.")
     
     LEGACY_INPUT_DIR.mkdir(parents=True, exist_ok=True)
-    logger.info(f"PASS: Exporting legacy feeds to {LEGACY_INPUT_DIR}")
+    logger.info(f"PASS: Source data detected. Exporting legacy feeds to {LEGACY_INPUT_DIR}")
 
 def validate_exit_criteria(expected_rows: int):
-    """Performs a post-generation audit on the exported CSV library."""
+    """
+    QUALITY AUDIT: Performs a post-generation integrity check to ensure 
+    referential parity between the Parquet source and the CSV output.
+    """
     logger.info("--- Validating Legacy CSV Exit Criteria ---")
     
     actual_rows = 0
     csv_files = list(LEGACY_INPUT_DIR.glob("**/*.csv"))
     
+    # Efficiently aggregate row counts from the fragmented library
     for csv_file in csv_files:
-        # Fast row count reading only the height
         actual_rows += pl.read_csv(csv_file).height
         
     summary = (
@@ -71,17 +70,21 @@ def validate_exit_criteria(expected_rows: int):
     print(summary)
     
     if actual_rows != expected_rows:
-        raise ValueError(f"Data loss detected! Expected {expected_rows}, found {actual_rows}")
+        logger.error(f"DATA LOSS DETECTED: Source had {expected_rows}, but CSVs have {actual_rows}")
+        raise ValueError("Referential Integrity Failure in Export.")
 
 def export_legacy_feeds():
-    """Partitioning logic with month/resource grouping."""
+    """
+    DECOMPOSITION ENGINE: Maps centralized Parquet data back into 
+    resource-specific monthly partitions.
+    """
     check_genesis_criteria()
     
-    logger.info("Loading Master Parquet...")
+    logger.info("LOADING: Reading Master Parquet into memory...")
     master_df = pl.read_parquet(MASTER_PARQUET_FILE)
     total_expected = master_df.height
 
-    # Create time helpers
+    # Inject temporal partitioning columns
     master_df = master_df.with_columns([
         pl.col("date").dt.strftime("%Y").alias("year"),
         pl.col("date").dt.strftime("%m").alias("month"),
@@ -91,7 +94,8 @@ def export_legacy_feeds():
     yearmonths = master_df["yearmonth"].unique().sort().to_list()
     resources = list(RESOURCE_TYPES.keys())
 
-    for ym in tqdm(yearmonths, desc="Exporting Monthly Feeds"):
+    # Nested Loop: YearMonth -> Resource Type
+    for ym in tqdm(yearmonths, desc="Fragmenting Data"):
         year, month = ym[:4], ym[4:]
         month_df = master_df.filter(pl.col("yearmonth") == ym)
         
@@ -102,7 +106,8 @@ def export_legacy_feeds():
             target_dir = LEGACY_INPUT_DIR / year / month
             target_dir.mkdir(parents=True, exist_ok=True)
             
-            # Legacy format: renaming and specific column selection
+            # FORMATTING: Transform to the "Legacy" schema
+            # Renames generic p95 column to resource-specific names (e.g., cpu_p95)
             res_df = month_df.filter(pl.col("resource") == res).select([
                 pl.col("date").dt.strftime("%Y-%m-%d").alias("date"),
                 pl.col("node_name").alias("host_id"),

@@ -5,7 +5,7 @@
  python -m horizonscale.synthetic.01_generate_master_parquet
 
  
- python -m horizonscale.lib.001learning
+
 
  python -m horizonscale.synthetic.02_export_monthly_csvs
 
@@ -13,3 +13,18 @@
  python -m horizonscale.pipeline.03_data_pipeline
 
  python -m horizonscale.pipeline.04_baseline_forecasting
+
+
+
+ python -m horizonscale.pipeline.06_turbo_prophet
+
+
+  python -m horizonscale.pipeline.07_baseline_challenger
+
+   python -m horizonscale.pipeline.08_model_competition
+
+   python -m horizonscale.pipeline.09_risk_reporting     
+   
+   #python -m horizonscale.pipeline.10_risk_dashboard
+
+   streamlit run src/horizonscale/pipeline/10_risk_dashboard.py
