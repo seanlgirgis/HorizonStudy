@@ -1,3 +1,3 @@
-2025-12-29 12:21:54,886 - [04_baseline_forecasting.py:check_genesis_criteria] - INFO - --- Validating Forecasting Genesis ---
-2025-12-29 12:21:54,908 - [04_baseline_forecasting.py:check_genesis_criteria] - INFO - PASS: ABT detected. Initializing Prophet engine...
-2025-12-29 12:21:54,923 - [04_baseline_forecasting.py:run_forecasting_lab] - INFO - LAB SHUTDOWN: Projections complete.
+2025-12-29 15:26:06,211 - [04_baseline_forecasting.py:check_genesis_criteria] - INFO - --- Validating Forecasting Genesis ---
+2025-12-29 15:26:06,234 - [04_baseline_forecasting.py:check_genesis_criteria] - INFO - PASS: ABT detected. Initializing Prophet engine...
+2025-12-29 15:26:06,253 - [04_baseline_forecasting.py:run_forecasting_lab] - INFO - LAB SHUTDOWN: Projections complete.

@@ -21,7 +21,7 @@ HorizonScale is a modern, high-performance capacity utilization and forecasting 
 * 
 **Model Competition**: Automatically evaluates and selects the most accurate algorithm (Prophet, XGBoost, or LSTM) for each unique resource profile.
 
-
+![alt text](image.png)
 
 ## Project Documentation
 

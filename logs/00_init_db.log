@@ -1,6 +1,6 @@
-2025-12-29 12:13:02,203 - [00_init_db.py:purge_existing_db] - INFO - CLEAN SLATE: Purged existing database at C:\pyproj\HorizonStudy\data\synthetic\horizonscale_synth.db
-2025-12-29 12:13:02,220 - [00_init_db.py:create_schema] - INFO - RELATIONAL SCHEMA: Tables (hosts, hierarchy, time) initialized.
-2025-12-29 12:13:02,221 - [00_init_db.py:seed_hosts_with_variants] - INFO - SEEDING: Generating 2000 hosts with weighted DNA...
-2025-12-29 12:13:02,492 - [00_init_db.py:validate_seeding_success] - INFO - --- Validating Database Exit Criteria ---
-2025-12-29 12:13:02,496 - [00_init_db.py:validate_seeding_success] - INFO - EXIT CRITERIA SATISFIED: All behavioral DNA profiles are present.
-2025-12-29 12:13:02,511 - [00_init_db.py:init_db] - INFO - GENESIS COMPLETE: HorizonScale Database is ready for telemetry.
+2025-12-29 15:25:43,214 - [00_init_db.py:purge_existing_db] - INFO - CLEAN SLATE: Purged existing database at C:\pyproj\HorizonStudy\data\synthetic\horizonscale_synth.db
+2025-12-29 15:25:43,232 - [00_init_db.py:create_schema] - INFO - RELATIONAL SCHEMA: Tables (hosts, hierarchy, time) initialized.
+2025-12-29 15:25:43,232 - [00_init_db.py:seed_hosts_with_variants] - INFO - SEEDING: Generating 2000 hosts with weighted DNA...
+2025-12-29 15:25:43,529 - [00_init_db.py:validate_seeding_success] - INFO - --- Validating Database Exit Criteria ---
+2025-12-29 15:25:43,533 - [00_init_db.py:validate_seeding_success] - INFO - EXIT CRITERIA SATISFIED: All behavioral DNA profiles are present.
+2025-12-29 15:25:43,551 - [00_init_db.py:init_db] - INFO - GENESIS COMPLETE: HorizonScale Database is ready for telemetry.

@@ -25,9 +25,10 @@ To validate the predictive power of the engine, HorizonScale utilizes a rigorous
 ## 3. Forecast Confidence Logic
 
 Validation is not just about historical accuracy; it is also about quantifying future uncertainty.
-
+![alt text](image-2.png)
 * **The High-Trust Window:** The initial 90-day forecast undergoes a "Tightness Test" where the confidence intervals are analyzed. If the interval width exceeds a defined threshold, the trust status is downgraded.
 * **Stability Analysis:** The system checks for "forecast jitter"—significant changes in the 6-month outlook between consecutive monthly runs—to identify models that may be overreacting to short-term noise.
+![alt text](image-3.png)
 
 ## 4. System & Execution Testing
 
