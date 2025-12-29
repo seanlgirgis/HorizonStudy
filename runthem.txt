@@ -4,4 +4,12 @@
 
  python -m horizonscale.synthetic.01_generate_master_parquet
 
+ 
  python -m horizonscale.lib.001learning
+
+ python -m horizonscale.synthetic.02_export_monthly_csvs
+
+
+ python -m horizonscale.pipeline.03_data_pipeline
+
+ python -m horizonscale.pipeline.04_baseline_forecasting

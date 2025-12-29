@@ -1,0 +1,4 @@
+2025-12-28 17:29:04,082 - [02_export_monthly_csvs.py:check_genesis_criteria] - INFO - --- Validating Script Entrance Criteria ---
+2025-12-28 17:29:04,082 - [02_export_monthly_csvs.py:check_genesis_criteria] - INFO - PASS: Exporting legacy feeds to C:\pyproj\HorizonStudy\data\legacy\inputs
+2025-12-28 17:29:04,082 - [02_export_monthly_csvs.py:export_legacy_feeds] - INFO - Loading Master Parquet...
+2025-12-28 17:29:05,786 - [02_export_monthly_csvs.py:validate_exit_criteria] - INFO - --- Validating Legacy CSV Exit Criteria ---

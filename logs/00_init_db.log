@@ -1,38 +1,6 @@
-2025-12-28 14:02:52,911 - [00_init_db.py:init_db] - INFO - Initializing simulation environment | Target: 2000 hosts
-2025-12-28 14:02:52,912 - [00_init_db.py:purge_existing_db] - INFO - Clean Slate: Existing database deleted at C:\pyproj\HorizonStudy\data\synthetic\horizonscale_synth.db
-2025-12-28 14:02:52,932 - [00_init_db.py:create_schema] - INFO - Database schema created successfully from SQL file.
-2025-12-28 14:02:52,932 - [00_init_db.py:seed_hosts_with_variants] - INFO - Seeding 2000 hosts with weighted Scenario/Variant logic...
-2025-12-28 14:02:53,211 - [00_init_db.py:seed_hosts_with_variants] - INFO - Successfully seeded 2000 hosts into inventory.
-2025-12-28 14:02:53,438 - [00_init_db.py:seed_business_hierarchy] - INFO - Business hierarchy seeded.
-2025-12-28 14:02:53,439 - [00_init_db.py:seed_time_periods] - INFO - Seeding time_periods from 2023-01-01 to 2025-12-01...
-2025-12-28 14:02:53,444 - [00_init_db.py:seed_time_periods] - INFO - Seeded 1066 daily time periods.
-2025-12-28 14:02:53,444 - [00_init_db.py:validate_exit_criteria] - INFO - --- Validating Script Exit Criteria ---
-2025-12-28 14:02:53,452 - [00_init_db.py:validate_exit_criteria] - INFO - Database seeding successfully verified.
-2025-12-28 14:02:53,452 - [00_init_db.py:validate_exit_criteria] - INFO - Final Inventory: 2000 Hosts | 2000 Hierarchy | 1066 Days
-2025-12-28 14:02:53,452 - [00_init_db.py:validate_exit_criteria] - INFO - 
-Scenario/Variant Distribution:
-shape: (10, 4)
-+-----------------+----------+-------+-------+
-| scenario        | variant  | count | pct   |
-+============================================+
-| STEADY_GROWTH   | normal   | 569   | 28.45 |
-|-----------------+----------+-------+-------|
-| LOW_IDLE        | stable   | 393   | 19.65 |
-|-----------------+----------+-------+-------|
-| SEASONAL        | balanced | 312   | 15.6  |
-|-----------------+----------+-------+-------|
-| BURST           | moderate | 242   | 12.1  |
-|-----------------+----------+-------+-------|
-| STEADY_GROWTH   | breach   | 135   | 6.75  |
-|-----------------+----------+-------+-------|
-| LOW_IDLE        | variable | 107   | 5.35  |
-|-----------------+----------+-------+-------|
-| CAPACITY_BREACH | imminent | 81    | 4.05  |
-|-----------------+----------+-------+-------|
-| SEASONAL        | extreme  | 80    | 4.0   |
-|-----------------+----------+-------+-------|
-| BURST           | extreme  | 61    | 3.05  |
-|-----------------+----------+-------+-------|
-| CAPACITY_BREACH | severe   | 20    | 1.0   |
-+-----------------+----------+-------+-------+
-2025-12-28 14:02:53,487 - [00_init_db.py:init_db] - INFO - Genesis complete: Database is ready for data generation.
+2025-12-28 17:20:15,032 - [00_init_db.py:purge_existing_db] - INFO - Clean Slate: Database deleted at C:\pyproj\HorizonStudy\data\synthetic\horizonscale_synth.db
+2025-12-28 17:20:15,051 - [00_init_db.py:create_schema] - INFO - Schema created successfully.
+2025-12-28 17:20:15,051 - [00_init_db.py:seed_hosts_with_variants] - INFO - Seeding 2000 hosts with standardized lowercase logic...
+2025-12-28 17:20:15,519 - [00_init_db.py:validate_seeding_success] - INFO - --- Validating Database Exit Criteria ---
+2025-12-28 17:20:15,523 - [00_init_db.py:validate_seeding_success] - INFO - EXIT CRITERIA SATISFIED: All 10 behavioral varieties are present.
+2025-12-28 17:20:15,552 - [00_init_db.py:init_db] - INFO - Database initialized with standardized lowercase data.
