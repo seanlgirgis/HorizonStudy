@@ -1,8 +1,14 @@
 # README.md: Project Entry Point
 
+## Project Workflow
+
+
+![Data pipeline](image-1.png)
+
 ## HorizonScale: AI-Driven Capacity Management
 
 HorizonScale is a modern, high-performance capacity utilization and forecasting pipeline designed to predict resource utilization across large-scale server estates. By evolving beyond legacy distributed computing constraints, this system utilizes advanced time-series modeling and parallel processing to deliver high-fidelity resource forecasts for 2,000+ individual server nodes.
+
 
 ## Key Features
 
@@ -53,6 +59,7 @@ Detailed information regarding the system's design, performance, and operation c
 * 
 **[Lessons Learned](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/lessons_learnt.md)**: Lessons learnt. key technical and strategic insights gained during the development of the HorizonScale platform.
 
+**[AI Architecture](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/AI_REASONING_AND_RAG_SPEC.md)**: Architectural specifications for the Contextual Capacity Assistant.
 
 ## Quick Start
 
