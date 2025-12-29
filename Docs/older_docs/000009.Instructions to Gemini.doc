@@ -45,8 +45,13 @@ https://github.com/seanlgirgis/HorizonStudy/tree/main/src/HorizonScale/pipeline
 - 10_risk_dashboard.py
 
 
+# Docs
+https://github.com/seanlgirgis/HorizonStudy/tree/main/Docs
 
-
+Here you will find module documentation for all modules
+- lib
+- synthetic
+- pipeline
 
 ---
 
