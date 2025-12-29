@@ -20,3 +20,8 @@ Thumbs.db
 # IDE Specific
 .vscode/
 .idea/
+
+# Large Data & Media
+*.png
+*.parquet
+*.duckdb
