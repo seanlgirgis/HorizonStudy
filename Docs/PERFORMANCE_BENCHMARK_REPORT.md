@@ -31,6 +31,9 @@ Testing conducted on the standard HorizonScale configuration demonstrates the fo
 | **Reporting Generation** | Sequential | Batch Parallelized |
 | **Total Pipeline Runtime** | 10x - 12x Duration | 1x Baseline Duration |
 
+![Sequential vs. Turbo](performance_comparison.png)
+
+
 ## 4. Resource Utilization Analysis
 
 * **CPU Scaling:** The pipeline demonstrates 90-95% utilization across all assigned CPU cores during the peak forecasting stage, indicating minimal idle time and efficient task distribution.
