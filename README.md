@@ -50,6 +50,8 @@ Detailed information regarding the system's design, performance, and operation c
 * 
 **[Future Roadmap](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/FUTURE_ROADMAP.md)**: Strategic plans for GPU acceleration, deep learning integration, and distributed computing.
 
+* 
+**[Lessons Learned](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/lessons_learnt.md)**: Lessons learnt. key technical and strategic insights gained during the development of the HorizonScale platform.
 
 
 ## Quick Start
