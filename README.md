@@ -32,23 +32,23 @@ Detailed information regarding the system's design, performance, and operation c
 
 
 * 
-**[Performance Benchmark](https://www.google.com/search?q=Docs/PERFORMANCE_BENCHMARK_REPORT.md)**: Quantitative analysis of the multiprocessing "Turbo" speed gains over legacy sequential methods.
+**[Performance Benchmark](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/PERFORMANCE_BENCHMARK_REPORT.md)**: Quantitative analysis of the multiprocessing "Turbo" speed gains over legacy sequential methods.
 
 
 * 
-**[Testing & Validation](https://www.google.com/search?q=Docs/TESTING_AND_VALIDATION_STRATEGY.md)**: Overview of statistical backtesting, data integrity gates, and the logic behind the "High Trust" window.
+**[Testing & Validation](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/TESTING_AND_VALIDATION_STRATEGY.md)**: Overview of statistical backtesting, data integrity gates, and the logic behind the "High Trust" window.
 
 
 * 
-**[Operational Runbook](https://www.google.com/search?q=Docs/OPERATIONAL_RUNBOOK.md)**: Step-by-step execution guide and command-line reference for the synthetic and pipeline layers.
+**[Operational Runbook](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/OPERATIONAL_RUNBOOK.md)**: Step-by-step execution guide and command-line reference for the synthetic and pipeline layers.
 
 
 * 
-**[Integration Guide](https://www.google.com/search?q=Docs/API_AND_INTEGRATION_GUIDE.md)**: Documentation for core utilities in `/lib` and instructions for extending the model competition engine.
+**[Integration Guide](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/API_AND_INTEGRATION_GUIDE.md)**: Documentation for core utilities in `/lib` and instructions for extending the model competition engine.
 
 
 * 
-**[Future Roadmap](https://www.google.com/search?q=Docs/FUTURE_ROADMAP.md)**: Strategic plans for GPU acceleration, deep learning integration, and distributed computing.
+**[Future Roadmap](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/FUTURE_ROADMAP.md)**: Strategic plans for GPU acceleration, deep learning integration, and distributed computing.
 
 
 
