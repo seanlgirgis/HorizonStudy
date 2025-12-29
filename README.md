@@ -28,7 +28,7 @@ HorizonScale is a modern, high-performance capacity utilization and forecasting 
 Detailed information regarding the system's design, performance, and operation can be found in the following documents:
 
 * 
-**[Architecture Evolution](https://www.google.com/search?q=Docs/TREND_TO_HORIZONSCALE_EVOLUTION.md)**: Details the transition from legacy "stub and module" environments to modern Python-native pipelines.
+**[Architecture Evolution](https://github.com/seanlgirgis/HorizonStudy/blob/main/Docs/TREND_TO_HORIZONSCALE_EVOLUTION.md)**: Details the transition from legacy "stub and module" environments to modern Python-native pipelines.
 
 
 * 
