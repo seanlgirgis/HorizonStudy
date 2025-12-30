@@ -24,13 +24,28 @@ To validate the predictive power of the engine, HorizonScale utilizes a rigorous
 
 ## 3. Forecast Confidence Logic
 
-Validation is not just about historical accuracy; it is also about quantifying future uncertainty.
 ![alt text](image-2.png)
-* **The High-Trust Window:** The initial 90-day forecast undergoes a "Tightness Test" where the confidence intervals are analyzed. If the interval width exceeds a defined threshold, the trust status is downgraded.
+
+Validation is not just about historical accuracy; it is also about quantifying future uncertainty.
+
+* **The High-Trust Window:** The initial 90-day forecast undergoes a "Tightness Test" where the width of Prophet's confidence intervals is analyzed. If the interval expands beyond a defined threshold—indicating increased uncertainty—the trust status is automatically downgraded.
 * **Stability Analysis:** The system checks for "forecast jitter"—significant changes in the 6-month outlook between consecutive monthly runs—to identify models that may be overreacting to short-term noise.
 ![alt text](image-3.png)
 
-## 4. System & Execution Testing
+
+## 4. System Evolution: Before vs. After Modernization
+
+The transition from legacy capacity frameworks to the HorizonScale engine involved a fundamental shift in both technology and execution strategy.
+
+| Feature | Legacy System (Trenda) | HorizonScale Engine |
+| --- | --- | --- |
+| **Data Storage** | Monolithic flat files / CSV | Optimized Apache Parquet (Columnar) |
+| **Execution Model** | Single-threaded Sequential Processing | "Turbo" Parallel Multiprocessing |
+| **Compute Scale** | Hardware-bound / Single Server | Elastic Multi-core / Multi-node |
+| **Process Bottleneck** | Python GIL (Global Interpreter Lock) | GIL-Bypass via Independent Process Pools |
+| **Time-to-Insight** | 10x - 12x Pipeline Duration | Real-time Parallel Execution (1x Baseline) |
+
+## 5. System & Execution Testing
 
 Beyond the data, the computational engine itself is validated for operational stability.
 
@@ -40,7 +55,7 @@ Beyond the data, the computational engine itself is validated for operational st
 
 ---
 
-## 5. Success Criteria
+## 6. Success Criteria
 
 A validation run is considered successful only when:
 
