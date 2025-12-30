@@ -1,86 +1,85 @@
-# Operational Runbook: HorizonScale Execution Guide
+# Operational Runbook: HorizonScale
 
-## Overview
+## 1. System Pre-Requisites
 
-This runbook provides the specific command-line instructions required to execute the HorizonScale capacity utilization pipeline. It follows a modular sequence designed to move from data generation to high-performance forecasting and final risk visualization.
+Before initiating the pipeline, ensure the environment is correctly configured:
 
----
+* **Python Version:** 3.8+ required for `multiprocessing` stability.
+* **Hardware:** Minimum 4 CPU cores recommended to utilize the "Turbo" engine.
+* **Dependencies:** Install requirements via `pip install -r requirements.txt`.
 
-## 1. System Initialization
+## 2. Pre-Flight Health Check
 
-Before running the pipeline, ensure the environment is initialized and all core libraries are available.
+To prevent execution errors, verify the integrity of the 3-year historical foundation before starting the forecasting engine.
 
-* **Working Directory:** Navigate to the root of the project source.
-* **Global Config:** Verify parameters in `src/HorizonScale/lib/config.py`.
+### **Database Verification Command**
 
-## 2. Phase 1: Synthetic Data Foundation
-
-These commands establish the 3-year historical baseline of utilization data for 2,000 servers.
+Execute the following to ensure the master Parquet file is present and contains the required 2,000 nodes:
 
 ```bash
-# Initialize the local database and folder structure
+# Verify the existence and size of the historical master file
+ls -lh data/processed/master_utilization.parquet
+
+```
+
+* **Health Indicator:** If the file size is 0 or missing, re-run the synthetic data initialization script (`00_init_db.py`).
+* **Integrity Gate:** The pipeline will automatically exit if the 36-month look-back window is incomplete.
+
+## 3. Core Pipeline Execution
+
+The pipeline follows a specific execution sequence to ensure data consistency.
+
+### **Step 1: Data Initialization**
+
+Generates the synthetic 3-year history for 2,000 server nodes.
+
+```bash
 python3 src/HorizonScale/synthetic/00_init_db.py
 
-# Generate 3 years of historical utilization data (Parquet format)
-python3 src/HorizonScale/synthetic/01_generate_master_parquet.py
-
-# Export the master data into monthly CSV feeds for pipeline ingestion
-python3 src/HorizonScale/synthetic/02_export_monthly_csvs.py
-
 ```
 
-## 3. Phase 2: The Forecasting Pipeline
+### **Step 2: The Turbo Forecasting Engine**
 
-This phase ingests the monthly feeds and executes the high-speed "Turbo" forecasting engine.
+Launches the multiprocessing pool to calculate forecasts.
 
 ```bash
-# Process raw monthly feeds into the unified data pipeline
-python3 src/HorizonScale/pipeline/03_data_pipeline.py
-
-# Run baseline forecasting for all server nodes
-python3 src/HorizonScale/pipeline/04_baseline_forecasting.py
-
-# Execute Turbo Prophet: High-performance multiprocessing forecasting
-# This bypasses the Python GIL to utilize all available CPU cores
 python3 src/HorizonScale/pipeline/06_turbo_prophet.py
 
-# Execute Challenger logic to compare baseline vs. new forecasts
-python3 src/HorizonScale/pipeline/07_baseline_challenger.py
+```
 
-# Run Model Competition to select the mathematically optimal model
-python3 src/HorizonScale/pipeline/08_model_competition.py
+### **Expected Terminal Output (Healthy Execution)**
+
+When successfully initialized, the terminal should show the distribution of tasks across CPU cores:
+
+```text
+[INFO] Initializing HorizonScale Turbo Engine...
+[INFO] Detected 16 logical CPU cores. Initializing Pool...
+[INFO] Distributing 2,000 nodes across 16 processes.
+[SUCCESS] Process 0: Completed 125 nodes.
+[SUCCESS] Process 1: Completed 125 nodes...
 
 ```
 
-## 4. Phase 3: Risk Reporting and Dashboards
+## 4. Reporting & Visualization
 
-Finalize the execution by generating actionable reports and launching the interactive visual interface.
+Once the "Turbo" engine completes, generate the risk audit summaries.
+
+### **Step 3: Risk Audit Generation**
 
 ```bash
-# Generate risk reports based on the 6-month outlook
 python3 src/HorizonScale/pipeline/09_risk_reporting.py
 
-# Launch the interactive Risk Dashboard via Streamlit
+```
+
+### **Step 4: Launching the Dashboard**
+
+```bash
 streamlit run src/HorizonScale/pipeline/10_risk_dashboard.py
 
 ```
 
-## 5. Operational Verification
+## 5. Troubleshooting
 
-To confirm a successful run, verify the following outputs:
+* **Memory Errors:** If the system runs out of RAM, reduce the `chunk_size` parameter in `config.py`.
+* **GIL Bottlenecks:** Ensure you are using `06_turbo_prophet.py` (multiprocessing) rather than the legacy sequential script to ensure core utilization.
 
-* **Historical Data:** Check for `master_utilization.parquet` in the data directory.
-* **Forecast Results:** Verify the existence of the competitive model selection logs.
-* **Risk Output:** Ensure the `high_trust_exceptions.csv` has been updated with the latest timestamps.
-
-## 6. Troubleshooting Command
-
-If a process in the "Turbo" phase hangs, you can identify and monitor the multiprocessing pool using:
-
-```bash
-# Monitor active Python processes and CPU load in linux
-top -u $(whoami)
-
-# Monitor active Python processes and CPU load in Windows using the performance monitor
-
-```
